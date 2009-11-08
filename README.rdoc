@@ -1,3 +1,4 @@
+
 = dm-fluiddb-adapter
 
 This is a DataMapper adapter for FluidDB (http://www.fluidinfo.com)
@@ -12,6 +13,12 @@ The connect url for the adapter is:
 
 That will connect to the sandbox instance of fluiddb as the test user
 with test password and use the subnamespace "test".
+
+= Quickstart
+
+http://gist.github.com/229538
+
+= Details
 
 It creates a namespace for each datamapper resource and a tag in that
 namespace for each property. It creates a tag with the same name as
