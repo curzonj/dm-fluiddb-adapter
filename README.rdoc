@@ -6,8 +6,47 @@ It makes heavy use of memcache and uses Typhoeus to parallelize
 fetching tag values. TyphoeusClient can also be used independently
 to make low-level requests.
 
+The connect url for the adapter is:
+
+ fluiddb://test:test@sandbox.fluidinfo.com/test
+
+That will connect to the sandbox instance of fluiddb as the test user
+with test password and use the subnamespace "test".
+
+It creates a namespace for each datamapper resource and a tag in that
+namespace for each property. It creates a tag with the same name as
+the namespace which it refers to as the 'identity tag' and tags all
+the objects for that resoruce with it.
+
+When you delete an object it removes the identity tag and adds a
+'deleted' tag from the resource's namespace to the object. The
+'deleted' tag is to help with garbage collection although garbage
+collection is not implemented by the adapter. The reasoning is that
+you may want to use custom tags for properties and use objects/tags
+between multiple tables/views.
+
+The about tag is not currently supported, but is on the short list for
+features as is being able to customize or make optional the identity
+tag and the corresponding 'identity query' which is the fluidb query
+used to find the entire set of objects belonging to the datamapper
+resource. 'Serial' properties are not supported and resources require
+a column named 'id', type String, and marked with ':key => true'.
+
+You can get access to the underlying http client for making direct requests
+by calling:
+
+ DataMapper.repository(:default).adapter.http
+
+The advantage to using the adapter's http instance is that Typhoeus has 
+to create a pool of handles to libCURL and it creates them on demand.
+They are a little slow to start up, so it's better to use a warmed up
+instance of the http client.
+
+
 == TODO
 
+* Add support for the 'about' fluiddb tag at creation.
+* Enable setting and/or removing the identity tag and query.
 * Add Set property type
 * Add Tag property type
 * Add range support for querying date attributes

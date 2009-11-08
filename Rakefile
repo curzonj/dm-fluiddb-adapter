@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "dm-fluiddb-adapter"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{A DataMapper adapter for FluidDB}
+    gem.description = %Q{This is a DataMapper adapter for FluidDB (www.fluidinfo.com)\nIt makes heavy use of memcache and uses Typhoeus to parallelize fetching tag values. TyphoeusClient can also be used independently to make low-level requests.}
     gem.email = "curzonj@gmail.com"
     gem.homepage = "http://github.com/curzonj/dm-fluiddb-adapter"
     gem.authors = ["Jordan Curzon"]
