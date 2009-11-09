@@ -16,7 +16,25 @@ with test password and use the subnamespace "test".
 
 = Quickstart
 
-http://gist.github.com/229538
+  # gem install dm-fluiddb-adapter
+  require 'dm-core'
+  require 'memcached'
+   
+  CACHE = Memcached.new 'localhost:11211', :prefix_key => 'fluiddb-test:'
+  DataMapper.setup(:default, "fluiddb://test:test@sandbox.fluidinfo.com/test")
+   
+  class MyModel
+    include DataMapper::Resource
+   
+    property :id, String, :key => true
+    property :name, String
+  end
+  # Ignore the 404 errors logged during the migration, it's just the adapter
+  # testing to see if the fluiddb tags/namespaces exist.
+  MyModel.auto_migrate!
+   
+  MyModel.create(:name => 'Hello World')
+  puts MyModel.first.inspect
 
 = Details
 
